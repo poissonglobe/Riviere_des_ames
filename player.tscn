@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c58c2pgt1k0wy"]
+[gd_scene load_steps=5 format=3 uid="uid://c58c2pgt1k0wy"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_2pd4i"]
 [ext_resource type="PackedScene" uid="uid://dtd2edet3ov2t" path="res://art/character/man/source/untitled.glb" id="2_ahgqm"]
+[ext_resource type="Script" path="res://CameraRoot.cs" id="3_iv6by"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f4tlc"]
 
@@ -16,3 +17,15 @@ script = ExtResource("1_2pd4i")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_f4tlc")
+
+[node name="CameraRoot" type="Node3D" parent="."]
+transform = Transform3D(2.1, 0, 0, 0, 2.1, 0, 0, 0, 2.1, 0, 0.334933, 0)
+script = ExtResource("3_iv6by")
+
+[node name="Camera" type="Node3D" parent="CameraRoot"]
+
+[node name="CameraCollider" type="SpringArm3D" parent="CameraRoot/Camera"]
+transform = Transform3D(1.24323, -1.69245, 2.90508e-07, -1.55057, -1.139, 0.841673, -0.678328, -0.498282, -1.92395, 0, 0.104137, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraRoot/Camera/CameraCollider"]
+transform = Transform3D(-0.0671217, -0.0837149, 0.0366228, 0.0913751, -0.0614947, 0.0269022, -2.57602e-08, 0.0454418, 0.103874, 0, 0, 1)

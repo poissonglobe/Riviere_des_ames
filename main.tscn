@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://en3w7tu71ess"]
+[gd_scene load_steps=4 format=3 uid="uid://en3w7tu71ess"]
 
 [ext_resource type="PackedScene" uid="uid://c58c2pgt1k0wy" path="res://player.tscn" id="1_j8nmw"]
-[ext_resource type="Script" path="res://Camera3d.cs" id="2_g082g"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kewb0"]
 size = Vector3(50, 2, 50)
@@ -25,8 +24,3 @@ transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 55, -
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_j8nmw")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 25, 4, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 0, 2, -4)
-script = ExtResource("2_g082g")

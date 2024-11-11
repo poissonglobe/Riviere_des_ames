@@ -17,6 +17,7 @@ public partial class Player : CharacterBody3D
     public override void _PhysicsProcess(double delta)
     {
 
+        Node3D camera = GetNode<Node3D>("CameraRoot/Camera");
         var direction = Vector3.Zero;
 
         // Input direction Management
@@ -42,13 +43,14 @@ public partial class Player : CharacterBody3D
             _targetVelocity.Y = JumpHeight * Speed;
         
         }
-        
-
 
         // Normalising direction
 
         if(direction != Vector3.Zero)
         {
+            // make the direction of the deplacement depend of the camera and not the character axis
+            direction = camera.GlobalTransform.Basis * direction; 
+            direction.Y = 0;
             direction = direction.Normalized();
 
             //update the direction of the player depending of the direction
@@ -63,14 +65,11 @@ public partial class Player : CharacterBody3D
         if (!IsOnFloor())
         {
             _targetVelocity.Y = Velocity.Y;
-
             _targetVelocity.Y -= FallAcceleration * (float)delta; 
-
         }
 
         // Moving the character
         Velocity = _targetVelocity;
         MoveAndSlide();
-
     }
 }
