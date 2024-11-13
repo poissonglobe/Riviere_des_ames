@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://en3w7tu71ess"]
+[gd_scene load_steps=7 format=3 uid="uid://en3w7tu71ess"]
 
 [ext_resource type="PackedScene" uid="uid://c58c2pgt1k0wy" path="res://player.tscn" id="1_j8nmw"]
+[ext_resource type="Script" path="res://scripts/Main.cs" id="1_w5i6l"]
+[ext_resource type="Script" path="res://scripts/CameraRoot.cs" id="3_alswj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kewb0"]
 size = Vector3(50, 2, 50)
@@ -8,7 +10,10 @@ size = Vector3(50, 2, 50)
 [sub_resource type="BoxMesh" id="BoxMesh_o1rjo"]
 size = Vector3(60, 2, 60)
 
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_tmsf8"]
+
 [node name="Main" type="Node"]
+script = ExtResource("1_w5i6l")
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -24,3 +29,17 @@ transform = Transform3D(1, 0, 0, 0, -0.866025, 0.5, 0, -0.5, -0.866025, 0, 55, -
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_j8nmw")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.101809, 0)
+
+[node name="CameraRoot" type="Node3D" parent="Player"]
+transform = Transform3D(2.1, 0, 0, 0, 2.1, 0, 0, 0, 2.1, 0, 0.334933, 0)
+script = ExtResource("3_alswj")
+
+[node name="Camera" type="Node3D" parent="Player/CameraRoot"]
+
+[node name="CameraCollider" type="SpringArm3D" parent="Player/CameraRoot/Camera"]
+transform = Transform3D(1.24323, -1.69245, 2.90508e-07, -1.55057, -1.139, 0.841673, -0.678328, -0.498282, -1.92395, 0, 0.104137, 0)
+shape = SubResource("SeparationRayShape3D_tmsf8")
+
+[node name="Camera3D" type="Camera3D" parent="Player/CameraRoot/Camera/CameraCollider"]
+transform = Transform3D(-0.0671217, -0.0837149, 0.0366228, 0.0913751, -0.0614947, 0.0269022, -2.57602e-08, 0.0454418, 0.103874, 0, 0, 1)
