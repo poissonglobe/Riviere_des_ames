@@ -7,13 +7,22 @@ public partial class Player : CharacterBody3D
     public int Speed { get; set; } = 10;
 
     [Export]
+    public Vector3 _targetVelocity = Vector3.Zero;
+
+    [Export]
     public float JumpHeight { get; set; } = 2.5f;
 
     [Export]
     public int FallAcceleration { get; set; } = 75;
-    
+
     [Export]
-    public Vector3 _targetVelocity = Vector3.Zero;
+    public bool jump = false;
+
+    public float timeDelay = 0.5f;
+
+    public float jumpDelay = 0.5f;
+
+
 
     public Node3D camera;
 
@@ -32,11 +41,24 @@ public partial class Player : CharacterBody3D
         Vector2 inputVector = Input.GetVector("move_left", "move_right", "move_back", "move_forward").Normalized();
         direction = new Vector3(-inputVector.X, 0, inputVector.Y);
 
-
-        if (Input.IsActionPressed("jump") && IsOnFloor())
+        if (Input.IsActionPressed("jump") && IsOnFloor() && !jump)
         {
-            _targetVelocity.Y = JumpHeight * Speed;
+            jump = true;
         
+        }
+        else if (jump && jumpDelay > 0)
+        {
+            jumpDelay -= (float)delta; // Decrease the delay by delta time
+            GD.Print("Jump delay: " + jumpDelay);
+
+            // After the delay, execute the jump action
+            if (jumpDelay <= 0)
+            {
+                GD.Print("Jump executed.");
+                _targetVelocity.Y = JumpHeight * Speed; // Apply jump force
+                jumpDelay = timeDelay;
+                jump = false;
+            }
         }
         else if(IsOnFloor())
         {
